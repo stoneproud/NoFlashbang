@@ -1,0 +1,4 @@
+interface:
+  display_name: "Popup Emergency"
+  short_description: "Contain agent-caused popups and focus theft"
+  default_prompt: "Use $popup-emergency to pause the current task and contain agent-caused interface disruption."
