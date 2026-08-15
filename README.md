@@ -8,9 +8,9 @@ The skill does not assume that one coding agent is safer or more capable than an
 
 ## Why the name NoFlashbang
 
-An unexpected agent-launched window is more than a harmless rectangle. It can appear at full brightness, cover the operator's current work, seize keyboard focus, and interrupt input before a sentence can be finished. From the operator's side, that feels like a small software flashbang: sudden light, disorientation, interruption, and a momentary loss of control.
+An unexpected agent-launched window is more than a harmless rectangle. It can appear at full brightness, cover the operator's current work, seize keyboard focus, and interrupt input before a sentence can be finished. From the operator's side, even one popup feels like a small software flashbang: sudden light, disorientation, interruption, and a momentary loss of control. A runaway launcher, worker, or retry loop rarely stops at one; it can empty a whole crate of them onto the desktop in rapid succession.
 
-`NoFlashbang` names the execution contract this skill defends. Background automation should stay in the background unless the operator explicitly requests visible interaction. No surprise windows. No focus theft. No retry loop throwing the same flashbang again.
+`NoFlashbang` names the execution contract this skill defends. Background automation should stay in the background unless the operator explicitly requests visible interaction. No surprise windows. No focus theft. No launcher or retry loop unloading another crate of flashbangs onto the desktop.
 
 When that contract fails, `!` is the shortest emergency signal the operator may still be able to send.
 
