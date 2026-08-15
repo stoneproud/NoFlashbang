@@ -1,24 +1,43 @@
 # NoFlashbang
 
-> Popup emergency containment for Codex.
+> A cross-platform popup-emergency Agent Skill for OpenAI Codex and Anthropic Claude Code.
 
-NoFlashbang is a cross-platform Codex skill for containing user-interface disruption caused by agent-launched activity. It turns a message containing only `!` into an emergency signal: pause the current task, identify the responsible process or relaunch source, contain it safely, and verify that the disruption will not recur before resuming.
+NoFlashbang contains user-interface disruption caused by agent-launched activity. A message containing only `!` becomes an emergency signal: pause the current task, identify the responsible process or relaunch source, contain it safely, and verify that the disruption will not recur before resuming.
+
+The skill does not assume that one coding agent is safer or more capable than another. Any agent with permission to launch local processes can accidentally cross an interactive UI boundary. The same containment procedure applies to Codex, Claude Code, and other hosts that implement the Agent Skills format.
 
 ## Why the trigger is one character
 
-A process that repeatedly opens windows or steals focus can make normal typing physically difficult. The operator may have only a brief moment in which the Codex input regains focus, so a long command is not a reliable emergency control.
+A process that repeatedly opens windows or steals focus can make normal typing physically difficult. The operator may have only a brief moment in which the agent input regains focus, so a long command is not a reliable emergency control.
 
 `!` is intentionally short enough to type and submit during that moment. The full-width form `！` is accepted for users whose input method produces it. Exact matching prevents ordinary sentences containing exclamation marks from triggering emergency mode.
 
+## Compatibility
+
+The portable behavior lives entirely in `SKILL.md`, using the shared Agent Skills structure: YAML frontmatter with `name` and `description`, followed by Markdown instructions.
+
+| Host | Personal installation | Project installation | Explicit invocation |
+| --- | --- | --- | --- |
+| OpenAI Codex | `$HOME/.agents/skills/popup-emergency` | `<repo>/.agents/skills/popup-emergency` | `$popup-emergency` |
+| Anthropic Claude Code | `$HOME/.claude/skills/popup-emergency` | `<repo>/.claude/skills/popup-emergency` | `/popup-emergency` |
+
+Both hosts can also activate the skill implicitly when the complete message is `!` or `！`. The repository is named `NoFlashbang`, but the installed skill directory should remain `popup-emergency` so its command name is predictable across hosts.
+
+`agents/openai.yaml` supplies optional OpenAI UI metadata. It does not contain the emergency workflow and is not required by Claude Code.
+
 ## Trigger rules
 
-The skill activates when the complete message, after trimming surrounding whitespace, is exactly:
+Emergency activation on either host occurs when the complete message, after trimming surrounding whitespace, is exactly:
 
 - `!`
 - `！`
-- `$popup-emergency` when explicitly invoking the skill
 
-Messages such as `Build finished!` do not trigger it.
+Explicit activation uses the host's normal syntax:
+
+- OpenAI Codex: `$popup-emergency`
+- Anthropic Claude Code: `/popup-emergency`
+
+Messages such as `Build finished!` do not trigger emergency mode.
 
 ## What it does
 
@@ -48,13 +67,9 @@ A background parent process is not assumed to make its children safe. Every desc
 
 ## Installation
 
-Place this directory at:
+Copy or clone this repository into a directory named `popup-emergency` at one of the host locations in the compatibility table. Use the personal location to make the skill available across projects, or the project location to share it through version control.
 
-```text
-$CODEX_HOME/skills/popup-emergency
-```
-
-If `CODEX_HOME` is not configured, place it under the `.codex/skills` directory in your user home. Restart or reload Codex if your environment does not discover newly added skills automatically.
+To use one checkout with both hosts, create host-supported symbolic links from both skill locations to the same `popup-emergency` directory. Copying the directory twice also works, but later updates must be synchronized manually.
 
 The installed directory should contain:
 
@@ -66,6 +81,8 @@ popup-emergency/
     └── openai.yaml
 ```
 
+If a newly created top-level skill directory is not detected, restart the host. Both products otherwise support discovering skill-file changes without rebuilding the skill.
+
 ## Usage
 
 If agent-launched activity starts opening windows or stealing focus, send:
@@ -76,8 +93,14 @@ If agent-launched activity starts opening windows or stealing focus, send:
 
 The agent should pause the original task, acknowledge the alarm, contain the evidenced source, report what it found and changed, verify recurrence, and only then resume.
 
-You can also invoke the skill explicitly in a normal message with `$popup-emergency`.
+Under normal conditions, invoke the skill explicitly with `$popup-emergency` in Codex or `/popup-emergency` in Claude Code.
 
 ## Limitations
 
-This skill is an emergency response procedure, not an operating-system kill switch. Its effectiveness depends on the agent having access to safe process inspection and containment tools. If the disruptive UI prevents any message from reaching Codex, the trigger cannot activate until the operator can submit it.
+This skill is an emergency response procedure, not an operating-system kill switch. Its effectiveness depends on the agent having access to safe process inspection and containment tools. If the disruptive UI prevents any message from reaching the agent, the trigger cannot activate until the operator can submit it.
+
+## Format references
+
+- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)
+- [Anthropic: Extend Claude with skills](https://code.claude.com/docs/en/skills)
+- [Agent Skills open standard](https://agentskills.io)

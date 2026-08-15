@@ -1,6 +1,6 @@
 ---
 name: popup-emergency
-description: Treat a user message whose complete trimmed content is exactly `!` or `！` as an urgent alarm that agent-launched activity may be opening visible windows, showing dialogs, or repeatedly stealing focus. The signal is intentionally one character because focus theft may leave the operator only a brief chance to type. Immediately pause ordinary work, contain the disruption, investigate recent agent-launched processes and persistent relaunch sources, stop only the evidenced offender, and verify that recurrence is controlled before resuming. Also use when explicitly invoked as `$popup-emergency`. Never trigger merely because a longer message contains an exclamation mark.
+description: Treat a user message whose complete trimmed content is exactly `!` or `！` as an urgent alarm that agent-launched activity may be opening visible windows, showing dialogs, or repeatedly stealing focus. The signal is intentionally one character because focus theft may leave the operator only a brief chance to type. Immediately pause ordinary work, contain the disruption, investigate recent agent-launched processes and persistent relaunch sources, stop only the evidenced offender, and verify that recurrence is controlled before resuming. Also use when explicitly invoked through the host's skill command, such as `$popup-emergency` in OpenAI Codex or `/popup-emergency` in Anthropic Claude Code. Never trigger merely because a longer message contains an exclamation mark.
 ---
 
 # Popup Emergency
@@ -11,7 +11,7 @@ Treat the signal as a live operator-impact incident. Prioritize containment over
 
 1. Pause the ordinary task immediately and preserve enough state to resume it later.
 2. Do not launch more ordinary commands, tests, builds, watchers, browsers, installers, or anything else that may create user-visible UI.
-3. Acknowledge concisely in commentary: `Alarm received. I have paused the task and am containing the interface disruption first.`
+3. Tell the operator immediately in a concise status message: `Alarm received. I have paused the task and am containing the interface disruption first.`
 4. Use only non-interactive, non-UI diagnostics required to identify and contain the source.
 
 ## Contain first
