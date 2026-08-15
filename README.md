@@ -6,6 +6,14 @@ NoFlashbang contains user-interface disruption caused by agent-launched activity
 
 The skill does not assume that one coding agent is safer or more capable than another. Any agent with permission to launch local processes can accidentally cross an interactive UI boundary. The same containment procedure applies to Codex, Claude Code, and other hosts that implement the Agent Skills format.
 
+## Why the name NoFlashbang
+
+An unexpected agent-launched window is more than a harmless rectangle. It can appear at full brightness, cover the operator's current work, seize keyboard focus, and interrupt input before a sentence can be finished. From the operator's side, that feels like a small software flashbang: sudden light, disorientation, interruption, and a momentary loss of control.
+
+`NoFlashbang` names the execution contract this skill defends. Background automation should stay in the background unless the operator explicitly requests visible interaction. No surprise windows. No focus theft. No retry loop throwing the same flashbang again.
+
+When that contract fails, `!` is the shortest emergency signal the operator may still be able to send.
+
 ## Why the trigger is one character
 
 A process that repeatedly opens windows or steals focus can make normal typing physically difficult. The operator may have only a brief moment in which the agent input regains focus, so a long command is not a reliable emergency control.
